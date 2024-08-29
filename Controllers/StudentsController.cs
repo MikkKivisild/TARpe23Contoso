@@ -12,6 +12,12 @@ namespace ContosoUniversity.Controllers
         {
             _context = context;
         }
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Students.ToListAsync());
+        }
+
+        /*
 
         public async Task<IActionResult> Index(
             string sordOrder,
@@ -68,5 +74,6 @@ namespace ContosoUniversity.Controllers
             int pageSize = 3;
             return View(await _context.Students.ToListAsync());
         }
+        */
     }
 }
