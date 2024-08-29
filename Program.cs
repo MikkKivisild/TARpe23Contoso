@@ -1,3 +1,6 @@
+using ContosoUniversity.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace ContosoUniversity
 {
     public class Program
@@ -8,7 +11,8 @@ namespace ContosoUniversity
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddDbContext<SchoolContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
