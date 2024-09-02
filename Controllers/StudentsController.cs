@@ -1,4 +1,5 @@
 ﻿using ContosoUniversity.Data;
+using ContosoUniversity.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,11 +13,12 @@ namespace ContosoUniversity.Controllers
         {
             _context = context;
         }
+
+        //  get all for index, retrive all students 
         public async Task<IActionResult> Index()
         {
             return View(await _context.Students.ToListAsync());
         }
-
         /*
 
         public async Task<IActionResult> Index(
@@ -75,5 +77,25 @@ namespace ContosoUniversity.Controllers
             return View(await _context.Students.ToListAsync());
         }
         */
+
+        //create get, haarab vaatest andmed, mida create meetod vajab.
+        public IActionResult Create(int id)
+        {
+            return View();
+        }
+
+        // create meetod, sisestab andmebaasi uue õpilase, insert new student into database
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ID,LastName,FirstName,EnrollmentDate")] Student student)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Students.Add(student);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(student);
+        }
     }
 }
