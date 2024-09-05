@@ -97,5 +97,59 @@ namespace ContosoUniversity.Controllers
             }
             return View(student);
         }
+        // Delete meetod, otsib andmebaasist kaasaantud id järgi õpilast.
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)// kui id on tühi/null, siis õpilast ei leita
+            {
+                return NotFound();
+            }
+
+            var student = await _context.Students // tehakse õpilase objekt andmebaasis oleva id järgi
+                .FirstOrDefaultAsync(m => m.ID == id);
+
+            if (student == null)// kui student objekt on tühi/null, siis ka õpilast ei leita
+            {
+                return NotFound();
+            }
+            return View(student);
+        }
+        //Delete POST meetod, teostab andembaasis vajaliku muudatuse. ehk kustutab andme ära
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var student = await _context.Students.FindAsync(id); //otsime andmebaasist õpilast id järgi
+
+            _context.Students.Remove(student);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)// kui id on tühi/null, siis õpilast ei leita
+            {
+                return NotFound();
+            }
+            var student = await _context.Students
+                .FirstOrDefaultAsync(m => m.ID == id);
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+            return View(student);
+        }
+        public async Task<ActionResult> Edit([Bind("ID,LastName,FirstName,EnrollmentDate")] Student student)
+        {
+             if(ModelState.IsValid)
+             {
+                 _context.Students.Update(student);
+                 await _context.SaveChangesAsync();
+                 return RedirectToAction(nameof(Index));
+             }
+            return View(student);
+        }
     }
 }
