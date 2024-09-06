@@ -15,7 +15,7 @@ namespace ContosoUniversity.Controllers
         }
 
         //  get all for index, retrive all students 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Student student)
         {
             return View(await _context.Students.ToListAsync());
         }
@@ -150,6 +150,26 @@ namespace ContosoUniversity.Controllers
                  return RedirectToAction(nameof(Index));
              }
             return View(student);
+        }
+        public async Task<ActionResult> Clone(int? id)
+        {
+                if(id == null)
+            {
+                return NotFound();
+            }
+                var student = await _context.Students.FirstOrDefaultAsync(m => m.ID == id);
+
+                var studentClone = new Student();
+                studentClone.LastName = student.LastName;
+                studentClone.FirstName = student.FirstName;
+                studentClone.EnrollmentDate = student.EnrollmentDate;
+
+                 if (ModelState.IsValid)
+                 {
+                    _context.Students.Add(studentClone);
+                    await _context.SaveChangesAsync();
+                 }
+            return RedirectToAction(nameof(Index));
         }
     }
 }
