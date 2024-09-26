@@ -2,7 +2,6 @@
 using ContosoUniversity.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.InteropServices;
 
 namespace ContosoUniversity.Controllers
 {
@@ -28,7 +27,8 @@ namespace ContosoUniversity.Controllers
                 .AsNoTracking()
                 .OrderBy(i => i.LastName)
                 .ToListAsync();
-            if (id == null)
+
+            if (id != null)
             {
                 ViewData["InstructorID"] = id.Value;
                 Instructor instructor = vm.Instructors
@@ -36,7 +36,7 @@ namespace ContosoUniversity.Controllers
                 vm.Courses = instructor.CourseAssignments
                     .Select(i => i.Course);
             }
-            if (courseId == null)
+            if (courseId != null)
             {
                 ViewData["CourseID"] = courseId.Value;
                 vm.Enrollments = vm.Courses
@@ -44,7 +44,9 @@ namespace ContosoUniversity.Controllers
                     .Single()
                     .Enrollments;
             }
+
             return View(vm);
+
         }
         [HttpGet]
         public IActionResult Create()

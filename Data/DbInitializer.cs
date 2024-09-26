@@ -115,7 +115,7 @@ namespace ContosoUniversity.Data
                     Name = "Skibidi sigma",
                     Budget = 0,
                     StartDate = DateTime.Parse("2024-02-03"),
-                    TurkishDepartmentDescription = "skibidi tuvaleti çok sigma.",
+                    TurkishDepartmentDescription = "skibidi tuvaleti çok sigma."
                 }
             };
             context.Departments.AddRange(departments);

@@ -21,7 +21,7 @@ namespace ContosoUniversity.Models
         /*
          * kaks oma andmetüüpi osakonna jaoks
          */
-        public ICollection? Scholarship { get; set; }
+        public ICollection<Department>? Scholarship { get; set; }
         [Display(Name = "A legendary student who has received a scholarship")]
         public string? TurkishDepartmentDescription {  get; set; } 
         public int? InstructorID { get; set; }
