@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ContosoUniversity.Controllers
 {
-    public class InstructorController : Controller
+    public class InstructorsController : Controller
     {
         private readonly SchoolContext _context; 
-        public InstructorController(SchoolContext context)
+        public InstructorsController(SchoolContext context)
         {
             _context = context;
         }
@@ -105,12 +105,55 @@ namespace ContosoUniversity.Controllers
             }
             return View(instructor);
         }
-    
+
+        public async Task<IActionResult> ViewDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var instructor = await _context.Instructors.FirstOrDefaultAsync(M => M.ID == id); 
+
+            if (instructor == null) 
+            {
+                return NotFound();
+            }
+
+            return View(instructor);
+
+
+        }
+
+        public async Task<ActionResult> Clone(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var Instructor = await _context.Instructors.FirstOrDefaultAsync(m => m.ID == id);
+
+            var InstructorClone = new Instructor();
+            InstructorClone.LastName = Instructor.LastName;
+            InstructorClone.FirstName = Instructor.FirstName;
+            InstructorClone.HireDate = Instructor.HireDate;
+
+
+            if (ModelState.IsValid)
+            {
+                _context.Instructors.Add(InstructorClone);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
 
         private void PopulateAssignedCourseData(Instructor instructor)
         {
-            var allCourses = _context.Courses; 
-            var instructorCourses = new HashSet<int>(instructor.CourseAssignments.Select(c => c.CourseID));
+            var allCourses = _context.Courses;
+            var instructorCourses = new HashSet<int>(collection: instructor.CourseAssignments.Select(c => c.CourseID));
             var vm = new List<AssignedCourseData>(); 
             foreach (var course in allCourses)
             {

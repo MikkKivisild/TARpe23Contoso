@@ -1,4 +1,4 @@
-﻿@model ContosoUniversity.Models.Student
+﻿@model ContosoUniversity.Models.Instructor
 
 @{
     ViewData["Title"] = "Details";
@@ -6,7 +6,7 @@
 
 <h1>Details</h1>
 
-<h3>Student Details</h3>
+<h3>Instructor details</h3>
 <div>
     <h4>Student</h4>
     <hr />
@@ -26,10 +26,17 @@
         </dd>
 
         <dt class="col-sm-2"
-        @Html.DisplayNameFor(Model => Model.EnrollmentDate)
+        @Html.DisplayNameFor(Model => Model.HireDate)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(Model => Model.EnrollmentDate)
+            @Html.DisplayFor(Model => Model.HireDate)
+        </dd>
+
+        <dt class="col-sm-2"
+        @Html.DisplayNameFor(Model => Model.OfficeAssignment.Location)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.OfficeAssignment.Location)
         </dd>
     </dl>
 </div>
