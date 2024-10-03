@@ -1,0 +1,62 @@
+﻿@model ContosoUniversity.Models.Department
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure about that</h3>
+<div>
+    <h4>Department</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2"
+        @Html.DisplayNameFor(Model => Model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.Name)
+        </dd>
+
+        <dt class="col-sm-2"
+        @Html.DisplayNameFor(Model => Model.Administrator)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.Administrator)
+        </dd>
+
+        <dt class="col-sm-2"
+        @Html.DisplayNameFor(Model => Model.TurkishDepartmentDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.TurkishDepartmentDescription)
+        </dd>
+
+        <dt class="col-sm-2"
+        @Html.DisplayNameFor(Model => Model.Budget)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.Budget)
+        </dd>
+
+        <dt class="col-sm-2"
+        @Html.DisplayNameFor(Model => Model.StartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.StartDate)
+        </dd>
+
+        <dt class="col-sm-2"
+        @Html.DisplayNameFor(Model => Model.RowVersion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.RowVersion)
+        </dd>
+
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="DepartmentID" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> | <a asp-action="Index">Cancel</a>
+    </form>
+</div>

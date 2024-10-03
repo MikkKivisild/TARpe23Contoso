@@ -91,14 +91,16 @@ namespace ContosoUniversity.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        [HttpGet]
-        public async Task<IActionResult> Edit(int? id)
+
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var instructor = await _context.Instructors.FindAsync(id);
+            var instructor = await _context.Instructors
+                .FirstOrDefaultAsync(m => m.ID == id);
+
             if (instructor == null)
             {
                 return NotFound();
@@ -106,24 +108,18 @@ namespace ContosoUniversity.Controllers
             return View(instructor);
         }
 
-        public async Task<IActionResult> ViewDetails(int? id)
+
+        public async Task<ActionResult> Edit([Bind("ID,LastName,FirstName,HireDate,City")] Instructor Instructor)
         {
-            if (id == null)
+            if(ModelState.IsValid)
             {
-                return NotFound();
+                _context.Instructors.Update(Instructor);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-
-            var instructor = await _context.Instructors.FirstOrDefaultAsync(M => M.ID == id); 
-
-            if (instructor == null) 
-            {
-                return NotFound();
-            }
-
-            return View(instructor);
-
-
+            return View(Instructor);
         }
+
 
         public async Task<ActionResult> Clone(int? id)
         {
@@ -137,6 +133,8 @@ namespace ContosoUniversity.Controllers
             InstructorClone.LastName = Instructor.LastName;
             InstructorClone.FirstName = Instructor.FirstName;
             InstructorClone.HireDate = Instructor.HireDate;
+            InstructorClone.City = Instructor.City;
+
 
 
             if (ModelState.IsValid)

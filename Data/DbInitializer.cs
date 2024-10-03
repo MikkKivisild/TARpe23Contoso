@@ -54,39 +54,39 @@ namespace ContosoUniversity.Data
                 context.SaveChanges();
             }
 
-            var enrollments = new Enrollment[]
-            {
-                new Enrollment{StudentID=1, CourseID=1050, Grade=Grade.A},
-                new Enrollment{StudentID=1, CourseID=1050, Grade=Grade.B},
-                new Enrollment{StudentID=1, CourseID=4022, Grade=Grade.C},
-
-                new Enrollment{StudentID=2, CourseID=4022, Grade=Grade. F},
-                new Enrollment{StudentID=2, CourseID=4021, Grade=Grade.C},
-                new Enrollment{StudentID=2, CourseID=4021, Grade=Grade.B},
-
-                new Enrollment{StudentID=8, CourseID=1045, Grade=Grade.F},
-
-                new Enrollment{StudentID=3, CourseID=1045},
-                
-                new Enrollment{StudentID=4, CourseID=3141, Grade=Grade.B},
-                
-                new Enrollment{StudentID=5, CourseID=3141, Grade=Grade.A},
-                
-                new Enrollment{StudentID=7, CourseID=2021, Grade=Grade.B},
-                
-                new Enrollment{StudentID=6, CourseID=2021},
-                
-                new Enrollment{StudentID=8, CourseID=2042, Grade=Grade.C},
-                
-                new Enrollment{StudentID=9, CourseID=2042, Grade=Grade.A},
-                
-                new Enrollment{StudentID=10, CourseID=6789, Grade=Grade.A},
-            };
-            foreach (Enrollment enrollment in enrollments)
-            {
-                context.Enrollments.Add(enrollment);
-            }
-            context.SaveChanges();
+           // var enrollments = new Enrollment[]
+           // {
+           //     new Enrollment{StudentID=1, CourseID=1050, Grade=Grade.A},
+           //     new Enrollment{StudentID=1, CourseID=1050, Grade=Grade.B},
+           //     new Enrollment{StudentID=1, CourseID=4022, Grade=Grade.C},
+           //
+           //     new Enrollment{StudentID=2, CourseID=4022, Grade=Grade. F},
+           //     new Enrollment{StudentID=2, CourseID=4021, Grade=Grade.C},
+           //     new Enrollment{StudentID=2, CourseID=4021, Grade=Grade.B},
+           //
+           //     new Enrollment{StudentID=8, CourseID=1045, Grade=Grade.F},
+           //
+           //     new Enrollment{StudentID=3, CourseID=1045},
+           //     
+           //     new Enrollment{StudentID=4, CourseID=3141, Grade=Grade.B},
+           //     
+           //     new Enrollment{StudentID=5, CourseID=3141, Grade=Grade.A},
+           //     
+           //     new Enrollment{StudentID=7, CourseID=2021, Grade=Grade.B},
+           //     
+           //     new Enrollment{StudentID=6, CourseID=2021},
+           //     
+           //     new Enrollment{StudentID=8, CourseID=2042, Grade=Grade.C},
+           //     
+           //     new Enrollment{StudentID=9, CourseID=2042, Grade=Grade.A},
+           //     
+           //     new Enrollment{StudentID=10, CourseID=6789, Grade=Grade.A},
+           // };
+           // foreach (Enrollment enrollment in enrollments)
+           // {
+           //     context.Enrollments.Add(enrollment);
+           // }
+           // context.SaveChanges();
 
             if(context.Instructors.Any() ) { return; }
             var instructors = new Instructor[]
