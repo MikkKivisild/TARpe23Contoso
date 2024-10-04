@@ -130,6 +130,21 @@ namespace ContosoUniversity.Data
             };
             context.Departments.AddRange(departments);
             context.SaveChanges();
+
+            if (context.Courses.Any()) { return; }
+            var courses = new Course[]
+            {
+                new Course
+                {
+                    Title = "AAAAA",
+                    Credits = 1251
+                },
+                new Course
+                {
+                    Title = "AAEAAA",
+                    Credits = 42
+                }
+            };
         }
     }
 }

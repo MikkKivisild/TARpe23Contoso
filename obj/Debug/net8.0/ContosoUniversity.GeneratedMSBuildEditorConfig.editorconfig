@@ -18,8 +18,16 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\opilane\Source\Repos\TARpe23Contoso
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/opilane/Source/Repos/TARpe23Contoso/Views/Course/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlXEluZGV4LmNzaHRtbA==
+[C:/Users/opilane/Source/Repos/TARpe23Contoso/Views/Courses/DetailsDelete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlc1xEZXRhaWxzRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/opilane/Source/Repos/TARpe23Contoso/Views/Courses/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/opilane/Source/Repos/TARpe23Contoso/Views/Departments/BaseOn.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0bWVudHNcQmFzZU9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/opilane/Source/Repos/TARpe23Contoso/Views/Departments/Create.cshtml]

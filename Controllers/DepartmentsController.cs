@@ -72,6 +72,18 @@ namespace ContosoUniversity.Controllers
             return View(department);
         }
 
+        public async Task<ActionResult> BaseOn([Bind("InstructorID,Name,Budget,StartDate,TurkishDepartmentDescription")] Department department)
+        {
+            ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "FullName", department.InstructorID);
+            if (ModelState.IsValid)
+            {
+                _context.Departments.Update(department);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(department);
+        }
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
