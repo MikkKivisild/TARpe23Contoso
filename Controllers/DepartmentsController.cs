@@ -59,10 +59,24 @@ namespace ContosoUniversity.Controllers
             return View(department);
 
         }
-
-        public async Task<ActionResult> Edit([Bind("InstructorID,Name,Budget,StartDate,TurkishDepartmentDescription")] Department department)
+        [HttpGet]
+        public async Task<ActionResult> Edit(int? id)
         {
-            ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "FullName", department.InstructorID);
+            if (id == null) { return NotFound(); }
+
+            var departmentToEdit = await _context.Departments
+                .Include(i=> i.Administrator)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.DepartmentID == id);
+            if (departmentToEdit == null) { return NotFound() ; }
+
+            ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "FullName", departmentToEdit.InstructorID);
+            return View(departmentToEdit);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(Department department)
+        {
             if (ModelState.IsValid)
             {
                 _context.Departments.Update(department);
