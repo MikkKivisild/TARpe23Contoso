@@ -168,3 +168,4 @@ namespace ContosoUniversity.Controllers
 }
 
 //muutus commiti Instructor Delete jaoks
+//muutus commitu Instructors - Edit, Clone jaoks
