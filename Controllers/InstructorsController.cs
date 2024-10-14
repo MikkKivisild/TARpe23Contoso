@@ -166,3 +166,5 @@ namespace ContosoUniversity.Controllers
         }
     }
 }
+
+//muutus commiti Instructor Delete jaoks
