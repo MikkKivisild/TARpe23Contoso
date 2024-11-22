@@ -5,7 +5,7 @@
 namespace ContosoUniversity.Migrations
 {
     /// <inheritdoc />
-    public partial class ishhijnhstrdhdfhdfgg : Migration
+    public partial class AAAAAAAAAAAAAAAaaaaaaaaaaaaaa : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

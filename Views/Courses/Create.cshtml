@@ -1,12 +1,16 @@
 ﻿@model ContosoUniversity.Models.Course
+
 @{
-    ViewData["Title"] = "Create/Edit";
+    ViewData["Title"] = "CreateEdit";
 }
-<h2>Create/Edit</h2>
+
+<h2>Create</h2>
+
+<h4>Course</h4>
 <hr />
-<<div class="row">
+<div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateEdit">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-check group">
@@ -22,8 +26,10 @@
             </div>
             <div class="form-group">
                 <input type="submit" name="Actiontype" value="Create" class="btn btn-primary" />
-                <input type="submit" name="Actiontype" value="Edit" class="btn btn-primary" />
             </div>
         </form>
     </div>
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-outline-primary">Back to List</a>
 </div>
