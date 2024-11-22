@@ -22,7 +22,7 @@ namespace ContosoUniversity.Controllers
 
         //create ja edit bs
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
@@ -34,7 +34,7 @@ namespace ContosoUniversity.Controllers
             {
                 _context.Courses.Add(course);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             return View(course);
         }
@@ -48,6 +48,8 @@ namespace ContosoUniversity.Controllers
             }
             return View(course);
         }
+
+
 
 
 
