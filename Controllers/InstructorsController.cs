@@ -68,29 +68,29 @@ namespace ContosoUniversity.Controllers
             PopulateAssignedCourseData(instructor);
             return View(instructor);
         }
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var instructor = await _context.Instructors
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (instructor == null)
-            {
-                return NotFound();
-            }
-            return View(instructor);
-        }
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var instructor = await _context.Instructors.FindAsync(id); 
-            _context.Instructors.Remove(instructor);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var instructor = await _context.Instructors
+        //        .FirstOrDefaultAsync(m => m.ID == id);
+        //    if (instructor == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(instructor);
+        //}
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    var instructor = await _context.Instructors.FindAsync(id); 
+        //    _context.Instructors.Remove(instructor);
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         public async Task<IActionResult> Details(int? id)
         {
@@ -109,41 +109,41 @@ namespace ContosoUniversity.Controllers
         }
 
 
-        public async Task<ActionResult> Edit([Bind("ID,LastName,FirstName,HireDate,City")] Instructor Instructor)
-        {
-            if(ModelState.IsValid)
-            {
-                _context.Instructors.Update(Instructor);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(Instructor);
-        }
+        //public async Task<ActionResult> Edit([Bind("ID,LastName,FirstName,HireDate,City")] Instructor Instructor)
+        //{
+        //    if(ModelState.IsValid)
+        //    {
+        //        _context.Instructors.Update(Instructor);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(Instructor);
+        //}
 
 
-        public async Task<ActionResult> Clone(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var Instructor = await _context.Instructors.FirstOrDefaultAsync(m => m.ID == id);
-
-            var InstructorClone = new Instructor();
-            InstructorClone.LastName = Instructor.LastName;
-            InstructorClone.FirstName = Instructor.FirstName;
-            InstructorClone.HireDate = Instructor.HireDate;
-            InstructorClone.City = Instructor.City;
-
-
-
-            if (ModelState.IsValid)
-            {
-                _context.Instructors.Add(InstructorClone);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
-        }
+        //public async Task<ActionResult> Clone(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var Instructor = await _context.Instructors.FirstOrDefaultAsync(m => m.ID == id);
+        //
+        //    var InstructorClone = new Instructor();
+        //    InstructorClone.LastName = Instructor.LastName;
+        //    InstructorClone.FirstName = Instructor.FirstName;
+        //    InstructorClone.HireDate = Instructor.HireDate;
+        //    InstructorClone.City = Instructor.City;
+        //
+        //
+        //
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Instructors.Add(InstructorClone);
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    return RedirectToAction(nameof(Index));
+        //}
 
 
 
@@ -166,6 +166,3 @@ namespace ContosoUniversity.Controllers
         }
     }
 }
-
-//muutus commiti Instructor Delete jaoks
-//muutus commitu Instructors - Edit, Clone jaoks
