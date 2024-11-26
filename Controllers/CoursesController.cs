@@ -30,12 +30,14 @@ namespace ContosoUniversity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CourseID,Title,Credits")] Course course)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Courses.Add(course);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            var CourseId = await _context.Courses.MaxAsync(m => (int?)m.CourseID) ?? 0;
+            course.CourseID = CourseId + 1;
             return View(course);
         }
         public async Task<ActionResult> Edit([Bind("CourseID,Title,Credits")] Course course)
