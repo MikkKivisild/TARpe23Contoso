@@ -1,35 +1,46 @@
 ﻿@model ContosoUniversity.Models.Course
 
 @{
-    ViewData["Title"] = "Details";
+    bool isDelete = ViewData["IsDelete"] != null && (bool)ViewData["IsDelete"];
+    ViewData["Title"] = isDelete ? "Delete" : "Details";
 }
 
-<h1>Details</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h3>Course Details</h3>
+<h3>@(isDelete ? "Are you sure about this?" : "Course Details")</h3>
+
 <div>
     <h4>Course</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2"
-        @Html.DisplayNameFor(Model => Model.CourseID)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CourseID)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(Model => Model.CourseID)
+            @Html.DisplayFor(model => model.CourseID)
         </dd>
 
-        <dt class="col-sm-2"
-        @Html.DisplayNameFor(Model => Model.Title)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(Model => Model.Title)
+            @Html.DisplayFor(model => model.Title)
         </dd>
 
-        <dt class="col-sm-2"
-        @Html.DisplayNameFor(Model => Model.Credits)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Credits)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(Model => Model.Credits)
+            @Html.DisplayFor(model => model.Credits)
         </dd>
     </dl>
+
+    @if (isDelete)
+    {
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="CourseID" />
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    }
 </div>
