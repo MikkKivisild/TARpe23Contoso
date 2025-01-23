@@ -86,7 +86,41 @@ namespace ContosoUniversity.Controllers
         }
 
 
+        public async Task<ActionResult> Edit([Bind("ID,LastName,FirstName,HireDate,City")] Instructor Instructor)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Instructors.Update(Instructor);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(Instructor);
+        }
 
+
+        public async Task<ActionResult> Clone(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var Instructor = await _context.Instructors.FirstOrDefaultAsync(m => m.ID == id);
+
+            var InstructorClone = new Instructor();
+            InstructorClone.LastName = Instructor.LastName;
+            InstructorClone.FirstName = Instructor.FirstName;
+            InstructorClone.HireDate = Instructor.HireDate;
+            InstructorClone.City = Instructor.City;
+
+
+
+            if (ModelState.IsValid)
+            {
+                _context.Instructors.Add(InstructorClone);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
 
 
         public async Task<IActionResult> Delete(int? id)
