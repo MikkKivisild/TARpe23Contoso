@@ -23,9 +23,9 @@ namespace ContosoUniversity.Controllers
 
 
         //Create controller
+        [HttpGet]
         public IActionResult Create()
         {
-            ViewData["CourseID"] = new SelectList(_context.Courses, "ID", "Title", "Credits");
             return View();
         }
 
@@ -33,7 +33,7 @@ namespace ContosoUniversity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CourseID,Title,Credits")] Course course)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Courses.Add(course);
                 await _context.SaveChangesAsync();
