@@ -1,15 +1,15 @@
 ﻿@model ContosoUniversity.Models.Course
-
-@{
-    bool isDelete = ViewData["IsDelete"] != null && (bool)ViewData["IsDelete"];
-    ViewData["Title"] = isDelete ? "Delete" : "Details";
+@if (ViewData["RequestedView"] == "Details")
+{
+    <h1 class="Course">@Model.Title</h1>
+}
+else
+{
+    <h1 class="Course">Delete @Model.Title</h1>
 }
 
-<h1>@ViewData["Title"]</h1>
-
-<h3>@(isDelete ? "Are you sure about this?" : "Course Details")</h3>
-
-<div>
+<div class="Course">
+    <form method="post">
     <h4>Course</h4>
     <hr />
     <dl class="row">
@@ -35,12 +35,19 @@
         </dd>
     </dl>
 
-    @if (isDelete)
+        @if (ViewData["RequestedView"] == "Details")
     {
-        <form asp-action="Delete">
-            <input type="hidden" asp-for="CourseID" />
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
-            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-        </form>
+        <a asp-action="index" class="btn btn-primary">back</a>
+            <a asp-action="Clone" asp-route-id="@Model.CourseID" class="btn btn-primary">Clone</a>
+        }
+    else
+    {
+        <input asp-action="DeleteConfirmed"
+                asp-controller="Courses"
+                type="submit"
+                class="btn btn-primary"
+                value="Delete"/>
+        <a asp-action="index" class="btn btn-primary">Cancel</a>
     }
+    </form>
 </div>

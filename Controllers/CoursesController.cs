@@ -26,23 +26,36 @@ namespace ContosoUniversity.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            ViewData["RequestedView"] = "Create";
+            return View("CreateEdit");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CourseID,Title,Credits")] Course course)
         {
-            if (!ModelState.IsValid)
+            ModelState.Remove("CourseID");
+            int lastid = await _context.Courses.CountAsync();
+            course.CourseID = lastid++;
+            if (ModelState.IsValid)
             {
+                
                 _context.Courses.Add(course);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(course);
+            return View("Index");
         }
         //Edit controller
-        public async Task<ActionResult> Edit([Bind("CourseID,Title,Credits")] Course course)
+        [HttpGet]
+        public IActionResult Edit([Bind("CourseID,Title,Credits")] int? id)
+        {
+            ViewData["RequestedView"] = "Edit";
+            Course course = _context.Courses.Find(id);
+            return View("CreateEdit");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit([Bind("CourseID,Title,Credits")] Course course)
         {
             if (ModelState.IsValid)
             {
@@ -50,12 +63,12 @@ namespace ContosoUniversity.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(course);
+            return View("CreateEdit", course);
         }
-
-        //DetailsDelete controller
-        public async Task<IActionResult> DetailsDelete(int? id, string actionType)
+        //Details controller
+        public async Task<IActionResult> Details(int? id)
         {
+            ViewData["RequestedView"] = "Details";
             if (id == null)
             {
                 return NotFound();
@@ -66,27 +79,55 @@ namespace ContosoUniversity.Controllers
             {
                 return NotFound();
             }
-            ViewData["actionType"] = actionType ?? "Details";
-            return View(course);
+            return View("DetailsDelete", course);     
+        }
+
+        //Delete controller
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            ViewData["RequestedView"] = "Delete";
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var course = await _context.Courses.FirstOrDefaultAsync(m => m.CourseID == id);
+            if (course == null)
+            {
+                return NotFound();
+            }
+            return View("DetailsDelete", course);
         }
 
         [HttpPost]
-        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DetailsDeleteConfirmed(int id, string actionType, Course course)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (actionType == "Details")
+            var course = await _context.Courses.FindAsync(id);
+            _context.Courses.Remove(course);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<ActionResult> Clone(int? id, Course course)
+        {
+            if (id == null)
             {
-                _context.Courses.Add(course);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return NotFound();
             }
-            else
+            var Course = await _context.Courses.FirstOrDefaultAsync(m => m.CourseID == id);
+
+            var CourseClone = new Course();
+            CourseClone.Credits = Course.Credits;
+            CourseClone.Title = Course.Title;
+            ModelState.Remove("CourseID");
+            if (ModelState.IsValid)
             {
-                _context.Courses.Remove(course);
+                _context.Courses.Add(CourseClone);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
             }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

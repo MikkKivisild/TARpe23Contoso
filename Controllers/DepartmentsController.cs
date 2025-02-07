@@ -1,6 +1,7 @@
 ﻿using ContosoUniversity.Data;
 using ContosoUniversity.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
@@ -143,17 +144,40 @@ namespace ContosoUniversity.Controllers
             ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "Fullname", departmentToUpdate.InstructorID);
             return View(departmentToUpdate);
         }
-
-        public async Task<ActionResult> BaseOn([Bind("InstructorID,Name,Budget,StartDate,TurkishDepartmentDescription")] Department department)
+        [HttpGet]
+        public async Task<IActionResult> BaseOn(int? id)
         {
-            ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "FullName", department.InstructorID);
-            if (ModelState.IsValid)
-            {
-                _context.Departments.Update(department);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+            if (id == null)
+            { 
+                return NotFound();
             }
+            var department = await _context.Departments
+                .Include(d => d.Administrator)
+                .FirstOrDefaultAsync(m =>m.DepartmentID== id);
+
+            if (department == null)
+            {
+                return NotFound();
+            }
+            ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "FullName", department.InstructorID);
             return View(department);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Make([Bind("InstructorID,Name,Budget,StartDate,TurkishDepartmentDescription")] Department department)
+        {
+            _context.Add(department);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> MakeDelete([Bind("InstructorID,Name,Budget,StartDate,TurkishDepartmentDescription")] Department department)
+        {
+            _context.Departments.Remove(department);
+            _context.Add(department);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Delete(int? id)
