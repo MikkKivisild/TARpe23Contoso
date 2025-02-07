@@ -36,7 +36,7 @@ namespace ContosoUniversity.Controllers
         {
             ModelState.Remove("CourseID");
             int lastid = await _context.Courses.CountAsync();
-            course.CourseID = lastid++;
+            course.CourseID += lastid++;
             if (ModelState.IsValid)
             {
                 
