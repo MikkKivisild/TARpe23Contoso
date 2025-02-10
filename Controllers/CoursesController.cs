@@ -83,5 +83,50 @@ namespace ContosoUniversity.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
+        //Details controller
+        public async Task<IActionResult> Details(int? id)
+        {
+            ViewData["RequestedView"] = "Details";
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var course = await _context.Courses.FirstOrDefaultAsync(m => m.CourseID == id);
+            if (course == null)
+            {
+                return NotFound();
+            }
+            return View("DetailsDelete", course);
+        }
+
+        //Delete controller
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            ViewData["RequestedView"] = "Delete";
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var course = await _context.Courses.FirstOrDefaultAsync(m => m.CourseID == id);
+            if (course == null)
+            {
+                return NotFound();
+            }
+            return View("DetailsDelete", course);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var course = await _context.Courses.FindAsync(id);
+            _context.Courses.Remove(course);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
